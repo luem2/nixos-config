@@ -1,0 +1,30 @@
+{ pkgs, ... }:
+
+{
+  boot.extraModprobeConfig = ''
+    options iwlwifi disable_11be=1 power_save=0
+  '';
+
+  networking.networkmanager.plugins = with pkgs; [
+    networkmanager-openvpn
+  ];
+
+  networking.networkmanager.wifi.powersave = false;
+
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    cifs-utils
+    nmap
+    openvpn
+    samba
+    wireguard-tools
+  ];
+}

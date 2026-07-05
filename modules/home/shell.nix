@@ -1,0 +1,216 @@
+{ pkgs, pkgsUnstable, repoPath, ... }:
+
+{
+  home.packages = with pkgs; [
+    bat
+    btop
+    cava
+    cmatrix
+    curl
+    eza
+    fastfetch
+    fd
+    fzf
+    jq
+    pipes
+    ripgrep
+    tree
+    unzip
+    wget
+    yazi
+    zellij
+    zoxide
+    pkgsUnstable.terminal-rain-lightning
+  ];
+
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+      fish_vi_key_bindings
+      set fish_greeting
+
+      # Change cursor shapes in different modes
+      set -g fish_cursor_default block
+      set -g fish_cursor_insert line
+      set -g fish_cursor_replace_one underscore
+      set -g fish_cursor_visual block
+
+    '';
+    shellAliases = {
+      cat = "bat";
+      ls = "eza --icons";
+      ll = "eza -lah --git --icons";
+      la = "eza -a --icons";
+      lt = "eza --tree --icons";
+    };
+    shellAbbrs = {
+      # Editors and helpers
+      vim = "nvim";
+      zed = "zeditor";
+      zj = "zellij";
+
+      # Git
+      g = "git";
+      gs = "git status --short --branch";
+      ga = "git add";
+      gaa = "git add --all";
+      gc = "git commit";
+      gcm = "git commit -m";
+      gp = "git push";
+      gpl = "git pull --rebase";
+      gf = "git fetch --prune";
+      gb = "git branch";
+      gsw = "git switch";
+      gl = "git log --oneline --graph --decorate";
+      gd = "git diff";
+      gds = "git diff --staged";
+
+      # Nix and this repo workflow
+      n = "nix";
+      nr = "nix run";
+      ns = "nix shell";
+      nd = "nix develop";
+      nf = "nix flake";
+      nfc = "nix flake check";
+      nfu = "nix flake update";
+      j = "just";
+      jc = "just check";
+      jb = "just build";
+      jt = "just test";
+      js = "just switch";
+      nj = "nixcfg";
+      njc = "nixcfg check";
+      njb = "nixcfg build";
+      njt = "nixcfg test";
+      njs = "nixcfg switch";
+      nju = "nixcfg update";
+
+      # Containers: Docker-compatible CLI backed by Podman.
+      d = "docker";
+      dc = "docker compose";
+      dcu = "docker compose up -d";
+      dcd = "docker compose down";
+      dcl = "docker compose logs -f";
+      dps = "docker ps";
+    };
+    functions = {
+      mkcd = {
+        description = "Create a directory and enter it";
+        body = ''
+          if test (count $argv) -ne 1
+            echo "usage: mkcd <directory>" >&2
+            return 2
+          end
+
+          mkdir -p -- $argv[1]
+          cd -- $argv[1]
+        '';
+      };
+
+      nixcfg = {
+        description = "Run this NixOS config justfile from any directory";
+        body = ''
+          set -l repo "${repoPath}"
+
+          if not test -f "$repo/justfile"
+            echo "nixcfg: $repo/justfile not found" >&2
+            return 1
+          end
+
+          command just --justfile "$repo/justfile" --working-directory "$repo" $argv
+        '';
+      };
+    };
+  };
+
+  programs.starship = {
+    enable = true;
+    enableFishIntegration = true;
+    settings = {
+      add_newline = true;
+      aws.symbol = " ";
+      buf.symbol = " ";
+      bun.symbol = " ";
+      c.symbol = " ";
+      cmake.symbol = " ";
+      conda.symbol = " ";
+      cpp.symbol = " ";
+      crystal.symbol = " ";
+      dart.symbol = " ";
+      deno.symbol = " ";
+      directory.read_only = " 󰌾";
+      docker_context.symbol = " ";
+      elixir.symbol = " ";
+      elm.symbol = " ";
+      fennel.symbol = " ";
+      fortran.symbol = " ";
+      fossil_branch.symbol = " ";
+      gcloud.symbol = " ";
+      git_branch.symbol = " ";
+      git_commit.tag_symbol = "  ";
+      golang.symbol = " ";
+      gradle.symbol = " ";
+      guix_shell.symbol = " ";
+      haskell.symbol = " ";
+      haxe.symbol = " ";
+      hg_branch.symbol = " ";
+      hostname.ssh_symbol = " ";
+      java.symbol = " ";
+      julia.symbol = " ";
+      kotlin.symbol = " ";
+      lua.symbol = " ";
+      memory_usage.symbol = "󰍛 ";
+      meson.symbol = "󰔷 ";
+      nim.symbol = "󰆥 ";
+      nix_shell.symbol = " ";
+      nodejs.symbol = " ";
+      package.symbol = "󰏗 ";
+      perl.symbol = " ";
+      php.symbol = " ";
+      pijul_channel.symbol = " ";
+      pixi.symbol = "󰏗 ";
+      python.symbol = " ";
+      rlang.symbol = "󰟔 ";
+      ruby.symbol = " ";
+      rust.symbol = "󱘗 ";
+      scala.symbol = " ";
+      status.symbol = " ";
+      swift.symbol = " ";
+      xmake.symbol = " ";
+      zig.symbol = " ";
+      os.symbols = {
+        Alpine = " ";
+        Arch = " ";
+        Debian = " ";
+        Fedora = " ";
+        Linux = " ";
+        Macos = " ";
+        NixOS = " ";
+        Ubuntu = " ";
+        Windows = "󰍲 ";
+      };
+    };
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+
+  programs.git = {
+    enable = true;
+    settings = {
+      core = {
+        editor = "zeditor";
+        excludesfile = "~/.config/git/ignore";
+      };
+      fetch.prune = true;
+      init.defaultBranch = "main";
+      pull.rebase = true;
+      push.autoSetupRemote = true;
+      include.path = "~/.gitconfig.local";
+    };
+  };
+
+  xdg.configFile."git/ignore".source = ../../configs/git/ignore;
+}

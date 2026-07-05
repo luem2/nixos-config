@@ -1,0 +1,17 @@
+.DS_Store
+.Trash-*
+.direnv/
+.env
+.env.local
+.env.*.local
+.eslintcache
+*.bak
+*.log
+*.swp
+*.swo
+*~
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+result
+result-*
