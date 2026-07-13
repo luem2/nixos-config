@@ -1,66 +1,9 @@
 {
-  "[css]": {
-    "editor.defaultFormatter": "biomejs.biome"
-  },
-  "[dockercompose]": {
-    "editor.autoIndent": "advanced",
-    "editor.defaultFormatter": "redhat.vscode-yaml",
-    "editor.insertSpaces": true,
-    "editor.quickSuggestions": {
-      "comments": false,
-      "other": true,
-      "strings": true
-    },
-    "editor.tabSize": 2
-  },
-  "[github-actions-workflow]": {
-    "editor.defaultFormatter": "redhat.vscode-yaml"
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "biomejs.biome"
-  },
-  "[json]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
-  },
-  "[jsonc]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
-  },
-  "[markdown]": {
-    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
-  },
-  "[python]": {
-    "diffEditor.ignoreTrimWhitespace": true,
-    "editor.defaultColorDecorators": "never",
-    "editor.defaultFormatter": "charliermarsh.ruff",
-    "editor.formatOnSave": true
-  },
-  "[svelte]": {
-    "editor.defaultFormatter": "svelte.svelte-vscode"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "biomejs.biome"
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "biomejs.biome"
-  },
-  "[yaml]": {
-    "editor.autoIndent": "keep",
-    "editor.insertSpaces": true,
-    "editor.quickSuggestions": {
-      "comments": false,
-      "other": true,
-      "strings": true
-    },
-    "editor.tabSize": 4
-  },
-  "biome.suggestInstallingGlobally": false,
   "breadcrumbs.enabled": true,
   "chatgpt.commentCodeLensEnabled": false,
   "conventionalCommits.showNewVersionNotes": false,
   "diffEditor.ignoreTrimWhitespace": true,
   "diffEditor.maxComputationTime": 0,
-  "docker.extension.enableComposeLanguageServer": false,
-  "dotenv.enableAutocloaking": false,
   "editor.cursorBlinking": "solid",
   "editor.cursorSmoothCaretAnimation": "on",
   "editor.fontFamily": "Hurmit Nerd Font Mono, JetBrainsMono Nerd Font Mono",
@@ -76,9 +19,6 @@
   "editor.renderWhitespace": "none",
   "editor.scrollbar.verticalScrollbarSize": 20,
   "editor.semanticHighlighting.enabled": true,
-  "editor.tokenColorCustomizations": {
-    "textMateRules": []
-  },
   "editor.wordWrap": "on",
   "explorer.compactFolders": false,
   "explorer.confirmDelete": false,
@@ -89,38 +29,11 @@
   "extensions.experimental.affinity": {
     "vscodevim.vim": 1
   },
-  "files.associations": {
-    "flake.lock": "json",
-    ".env*": "dotenv"
-  },
   "git.autofetch": true,
   "git.confirmSync": false,
   "git.openRepositoryInParentFolders": "always",
   "githubPullRequests.createOnPublishBranch": "never",
-  "go.toolsManagement.autoUpdate": true,
-  "js/ts.updateImportsOnFileMove.enabled": "always",
-  "mssql.autoDisableNonTSqlLanguageService": true,
-  "mssql.enableRichExperiences": true,
-  "mssql.objectExplorer.groupBySchema": true,
-  "mssql.openQueryResultsInTabByDefault": false,
-  "mssql.openQueryResultsInTabByDefaultDoNotShowPrompt": true,
-  "nix.enableLanguageServer": true,
-  "nix.serverPath": "nixd",
-  "nix.serverSettings": {
-    "nixd": {
-      "formatting": {
-        "command": [
-          "nixfmt"
-        ]
-      }
-    }
-  },
-  "poor-mans-t-sql-formatter-pg.std.expandCommaLists": true,
-  "poor-mans-t-sql-formatter-pg.std.spaceAfterExpandedComma": true,
-  "poor-mans-t-sql-formatter-pg.std.trailingCommas": false,
-  "python.createEnvironment.trigger": "off",
   "security.workspace.trust.untrustedFiles": "open",
-  "svelte.enable-ts-plugin": true,
   "telemetry.telemetryLevel": "off",
   "terminal.explorerKind": "both",
   "terminal.external.linuxExec": "ghostty",

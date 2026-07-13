@@ -168,3 +168,20 @@ que conviene usarlo sólo si esa comodidad vale la pena.
 
 Una vez copiado al repo, conviene limpiar el override local correspondiente
 para que no tape la configuración declarativa.
+
+## Revisión pendiente para Noctalia v5 estable
+
+Cuando Noctalia v5 salga estable, revisar si ya soporta de forma nativa cosas
+que hoy resolvemos a mano:
+
+- integración de secretos/launcher, para reemplazar o simplificar
+  `rofi-rbw` + `wofi`;
+- acciones custom del launcher para buscar secretos, copiar usuario/password,
+  autotype con confirmación y abrir URLs asociadas al item;
+- un plugin propio de Noctalia para consultar `rbw` sin depender de un launcher
+  externo, si la API de plugins lo vuelve cómodo;
+- keybinds estilo Vim en launcher y paneles;
+- generación de tema desde wallpaper y compatibilidad con Stylix;
+- overrides locales en `~/.local/state/noctalia/settings.toml` que puedan haber
+  quedado obsoletos;
+- nombres de opciones que hayan cambiado entre la versión actual y v5 estable.

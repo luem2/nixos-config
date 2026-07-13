@@ -11,8 +11,8 @@
   systemd.services.power-profile-auto = {
     description = "Set the power profile according to AC power";
     after = [ "power-profiles-daemon.service" ];
-    requires = [ "power-profiles-daemon.service" ];
-    wantedBy = [ "multi-user.target" ];
+    wants = [ "power-profiles-daemon.service" ];
+    wantedBy = [ "power-profiles-daemon.service" ];
 
     serviceConfig.Type = "oneshot";
     script = ''

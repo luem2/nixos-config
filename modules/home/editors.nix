@@ -57,7 +57,8 @@ in
 
   xdg.configFile = {
     "nvim/lua".source = config.lib.file.mkOutOfStoreSymlink "${repoPath}/configs/nvim/lua";
-    "nvim/stylua.toml".source = config.lib.file.mkOutOfStoreSymlink "${repoPath}/configs/nvim/stylua.toml";
+    "nvim/stylua.toml".source =
+      config.lib.file.mkOutOfStoreSymlink "${repoPath}/configs/nvim/stylua.toml";
     "Code/User/settings.json" = {
       force = true;
       source = config.lib.file.mkOutOfStoreSymlink "${repoPath}/configs/vscode/settings.json";
@@ -70,33 +71,10 @@ in
       force = true;
       source = config.lib.file.mkOutOfStoreSymlink "${repoPath}/configs/vscode/snippets/python.json";
     };
-    "zed/settings.json".source = config.lib.file.mkOutOfStoreSymlink "${repoPath}/configs/zed/settings.json";
-    "zed/keymap.json".source = config.lib.file.mkOutOfStoreSymlink "${repoPath}/configs/zed/keymap.json";
-    "applications/dev.zed.Zed.desktop".text =
-      let
-        zed = pkgs.zed-editor;
-        icon = "${zed}/share/icons/hicolor/512x512/apps/zed.png";
-      in
-      ''
-        [Desktop Entry]
-        Version=1.0
-        Type=Application
-        Name=Zed
-        GenericName=Text Editor
-        Comment=A high-performance, multiplayer code editor.
-        TryExec=zeditor
-        StartupNotify=true
-        Exec=zeditor %U
-        Icon=${icon}
-        Categories=Utility;TextEditor;Development;IDE;
-        Keywords=zed;
-        MimeType=text/plain;application/x-zerosize;x-scheme-handler/zed;
-        Actions=NewWorkspace;
-
-        [Desktop Action NewWorkspace]
-        Exec=zeditor --new %U
-        Name=Open a new workspace
-      '';
+    "zed/settings.json".source =
+      config.lib.file.mkOutOfStoreSymlink "${repoPath}/configs/zed/settings.json";
+    "zed/keymap.json".source =
+      config.lib.file.mkOutOfStoreSymlink "${repoPath}/configs/zed/keymap.json";
   };
 
   programs.vscode = {

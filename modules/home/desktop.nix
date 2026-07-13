@@ -26,6 +26,7 @@ in
     localsend
     nerd-fonts.hurmit
     nerd-fonts.jetbrains-mono
+    obsidian
     pkgsUnstable.bruno
     pkgsUnstable.dbeaver-bin
     seahorse
@@ -97,6 +98,18 @@ in
       };
       location = {
         auto_locate = true;
+      };
+      keybinds = {
+        down = [
+          "Down"
+          "Ctrl+J"
+          "Ctrl+N"
+        ];
+        up = [
+          "Up"
+          "Ctrl+K"
+          "Ctrl+P"
+        ];
       };
       bar.main = {
         position = "top";

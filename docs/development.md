@@ -15,7 +15,7 @@ Regla práctica:
   proyecto: `git`, editor, `just`, `direnv`, `nix`, `ripgrep`, `fd`, `eza`,
   `bat`, `zoxide`.
 - Global temporal: lenguajes que todavía usás en muchos proyectos sin shell
-  propio: Go, Rust, Python, `uv`, `sqlfluff`.
+  propio. La meta es que esta lista tienda a cero.
 - Por proyecto: runtimes, compiladores, bases de datos, linters, formatters y
   CLIs atados a una versión concreta del proyecto.
 

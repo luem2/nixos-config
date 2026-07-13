@@ -155,9 +155,9 @@ bases de datos. El socket Docker-compatible queda desactivado por defecto porque
 requiere dar permisos equivalentes a Docker; se puede evaluar si VS Code
 Dev Containers lo necesita de verdad.
 
-Go, Rust, Python, `uv` y `sqlfluff` están disponibles globalmente porque forman
-parte del uso diario. Los proyectos con necesidades propias pueden declarar
-`devShell`/`direnv` por repositorio para fijar versiones exactas.
+Los runtimes, linters y CLIs específicos viven en `devShell`/`direnv` por
+repositorio. El perfil global conserva sólo herramientas transversales de uso
+diario.
 
 ## Editores
 

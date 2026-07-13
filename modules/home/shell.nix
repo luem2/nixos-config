@@ -12,11 +12,17 @@
     fd
     fzf
     jq
+    pinentry-gnome3
     pipes
+    rbw
     ripgrep
+    rofi-rbw
     tree
     unzip
     wget
+    wl-clipboard
+    wofi
+    wtype
     yazi
     zellij
     zoxide
