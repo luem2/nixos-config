@@ -4,6 +4,8 @@
   home.packages = with pkgs; [
     direnv
     just-lsp
+    lazydocker
+    lazygit
     nil
     nixd
     just

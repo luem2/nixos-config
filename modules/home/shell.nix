@@ -1,5 +1,14 @@
-{ pkgs, pkgsUnstable, repoPath, ... }:
+{
+  config,
+  pkgs,
+  pkgsUnstable,
+  repoPath,
+  ...
+}:
 
+let
+  colors = config.lib.stylix.colors.withHashtag;
+in
 {
   home.packages = with pkgs; [
     bat
@@ -201,6 +210,81 @@
   programs.zoxide = {
     enable = true;
     enableFishIntegration = true;
+  };
+
+  programs.wofi = {
+    enable = true;
+    settings = {
+      insensitive = true;
+      allow_images = true;
+      width = "620";
+      height = "420";
+      prompt = "Bitwarden";
+      key_down = "Down,Ctrl-j,Ctrl-n";
+      key_up = "Up,Ctrl-k,Ctrl-p";
+    };
+    style = with colors; ''
+      * {
+        font-family: "JetBrainsMono Nerd Font";
+        font-size: 14px;
+      }
+
+      window {
+        margin: 0;
+        border: 1px solid ${base03};
+        border-radius: 12px;
+        background-color: ${base00};
+        color: ${base05};
+      }
+
+      #outer-box {
+        margin: 12px;
+        background-color: transparent;
+      }
+
+      #input {
+        min-height: 42px;
+        margin: 0 0 10px 0;
+        padding: 0 14px;
+        border: 1px solid ${base03};
+        border-radius: 8px;
+        background-color: ${base01};
+        color: ${base05};
+      }
+
+      #input:focus {
+        border-color: ${base0A};
+      }
+
+      #scroll {
+        margin: 0;
+        border-radius: 8px;
+        background-color: transparent;
+      }
+
+      #entry {
+        min-height: 36px;
+        padding: 7px 10px;
+        border-radius: 7px;
+        background-color: transparent;
+      }
+
+      #entry:selected {
+        background-color: ${base02};
+      }
+
+      #entry:selected #text {
+        color: ${base06};
+      }
+
+      #text {
+        color: ${base05};
+      }
+
+      #img {
+        margin-right: 10px;
+      }
+    '';
   };
 
   programs.git = {

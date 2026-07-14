@@ -52,6 +52,7 @@ let
 in
 {
   home.packages = [
+    pkgs.package-version-server
     pkgs.zed-editor
   ];
 

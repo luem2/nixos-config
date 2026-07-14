@@ -25,6 +25,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    stylix = {
+      url = "git+https://github.com/nix-community/stylix?ref=release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =

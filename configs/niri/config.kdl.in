@@ -10,7 +10,6 @@ input {
         tap
         natural-scroll
     }
-    focus-follows-mouse
 }
 
 // Home Manager replaces this placeholder with the active host output file.
@@ -32,9 +31,9 @@ layout {
     }
     default-column-width { proportion 0.5; }
     focus-ring {
-        width 4
-        active-color "#707070"
-        inactive-color "#d0d0d0"
+        width 2
+        active-color "#8f8f8f"
+        inactive-color "#3f3f3f"
         urgent-color "#cc4444"
     }
     border {
@@ -48,6 +47,9 @@ layout {
         color "#0007"
     }
 }
+
+// Noctalia renders this file from the active wallpaper palette at runtime.
+include "noctalia.kdl"
 
 layer-rule {
     match namespace="^noctalia-backdrop"
@@ -146,6 +148,7 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     Mod+Return hotkey-overlay-title="Terminal" { spawn "ghostty"; }
+    Mod+Shift+Return hotkey-overlay-title="WezTerm" { spawn "wezterm"; }
     Mod+Space hotkey-overlay-title="Launcher" { spawn-sh "noctalia msg panel-toggle launcher"; }
     Mod+S hotkey-overlay-title="Control Center" { spawn-sh "noctalia msg panel-toggle control-center"; }
     Mod+Comma hotkey-overlay-title="Noctalia Settings" { spawn-sh "noctalia msg settings-toggle"; }
@@ -155,12 +158,13 @@ binds {
     Mod+N hotkey-overlay-title="Notifications" { spawn-sh "noctalia msg panel-toggle control-center notifications"; }
     Mod+M hotkey-overlay-title="System Monitor" { spawn-sh "noctalia msg panel-toggle control-center system"; }
     Mod+Alt+L hotkey-overlay-title="Lock" { spawn-sh "noctalia msg session lock"; }
-    Alt+Tab repeat=false hotkey-overlay-title="Window Switcher" { spawn-sh "noctalia msg window-switcher"; }
     Ctrl+Alt+Delete repeat=false hotkey-overlay-title="System Monitor" { spawn "ghostty" "-e" "btop"; }
     Mod+F hotkey-overlay-title="Yazi" { spawn "ghostty" "-e" "yazi"; }
     Mod+E hotkey-overlay-title="Zed" { spawn "zeditor"; }
     Mod+B hotkey-overlay-title="Chrome" { spawn "google-chrome-stable"; }
-    Mod+Alt+B repeat=false hotkey-overlay-title="Bitwarden" { spawn "rofi-rbw" "--selector" "wofi" "--clipboarder" "wl-copy" "--typer" "wtype" "--use-notify-send"; }
+    Mod+Alt+B repeat=false hotkey-overlay-title="Bitwarden Password" { spawn "rofi-rbw" "--selector" "wofi" "--clipboarder" "wl-copy" "--typer" "wtype" "--action" "copy" "--target" "password" "--clear-after" "45" "--prompt" "Copy password"; }
+    Mod+Alt+U repeat=false hotkey-overlay-title="Bitwarden Username" { spawn "rofi-rbw" "--selector" "wofi" "--clipboarder" "wl-copy" "--typer" "wtype" "--action" "copy" "--target" "username" "--prompt" "Copy username"; }
+    Mod+Alt+Shift+B repeat=false hotkey-overlay-title="Bitwarden Field" { spawn "rofi-rbw" "--selector" "wofi" "--clipboarder" "wl-copy" "--typer" "wtype" "--action" "copy" "--target" "menu" "--clear-after" "45" "--prompt" "Choose entry"; }
 
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "noctalia msg volume-up"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn-sh "noctalia msg volume-down"; }
@@ -172,8 +176,8 @@ binds {
     XF86AudioPrev allow-when-locked=true { spawn-sh "noctalia msg media previous"; }
     XF86AudioNext allow-when-locked=true { spawn-sh "noctalia msg media next"; }
 
-    Mod+O repeat=false hotkey-overlay-title="Overview" { toggle-overview; }
-    Mod+Tab repeat=false hotkey-overlay-title="Overview" { toggle-overview; }
+    Mod+O repeat=false hotkey-overlay-title="Overview" { spawn "noctalia-overview"; }
+    Mod+Tab repeat=false hotkey-overlay-title="Overview" { spawn "noctalia-overview"; }
     Mod+Q repeat=false { close-window; }
     Mod+H { focus-column-left; }
     Mod+J { focus-window-down; }

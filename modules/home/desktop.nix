@@ -1,6 +1,7 @@
 {
   config,
   hostName,
+  lib,
   pkgs,
   pkgsUnstable,
   repoPath,
@@ -10,12 +11,66 @@
 let
   niriConfig = builtins.readFile ../../configs/niri/config.kdl.in;
   niriOutputsPath = ../../hosts + "/${hostName}/niri-outputs.kdl";
+  noctaliaOverview = pkgs.writeShellApplication {
+    name = "noctalia-overview";
+    runtimeInputs = [
+      pkgsUnstable.niri
+    ];
+    text = ''
+      niri msg action toggle-overview
+    '';
+  };
+  noctaliaOverviewDockSync = pkgs.writeShellApplication {
+    name = "noctalia-overview-dock-sync";
+    runtimeInputs = [
+      config.programs.noctalia.package
+      pkgs.jq
+      pkgsUnstable.niri
+    ];
+    text = ''
+      sync_dock() {
+        if [ "$1" = "true" ]; then
+          noctalia msg dock-show >/dev/null 2>&1 || true
+        else
+          noctalia msg dock-hide >/dev/null 2>&1 || true
+        fi
+      }
+
+      current_overview="$(
+        niri msg --json overview-state 2>/dev/null \
+          | jq -r '.is_open // false' 2>/dev/null \
+          || printf false
+      )"
+      sync_dock "$current_overview"
+
+      niri msg --json event-stream \
+        | jq --unbuffered -r 'select(.OverviewOpenedOrClosed?) | .OverviewOpenedOrClosed.is_open' \
+        | while read -r is_open; do
+            sync_dock "$is_open"
+          done
+    '';
+  };
+  niriNoctaliaFallback = pkgs.writeText "noctalia-niri-fallback.kdl" ''
+    layout {
+        focus-ring {
+            active-color "#8f8f8f"
+            inactive-color "#3f3f3f"
+            urgent-color "#cc4444"
+        }
+
+        shadow {
+            color "#0007"
+        }
+    }
+  '';
 in
 {
   home.packages = with pkgs; [
+    appflowy
     bitwarden-cli
     clock-rs
     ente-auth
+    noctaliaOverview
     gnome-disk-utility
     ghostty
     nautilus
@@ -31,15 +86,26 @@ in
     pkgsUnstable.dbeaver-bin
     seahorse
     thunderbird
+    wezterm
   ];
 
   xdg.configFile = {
     "ghostty/config".source = config.lib.file.mkOutOfStoreSymlink "${repoPath}/configs/ghostty/config";
+    "wezterm/wezterm.lua".source =
+      config.lib.file.mkOutOfStoreSymlink "${repoPath}/configs/wezterm/wezterm.lua";
     "niri/config.kdl".text =
       builtins.replaceStrings [ "@niri_outputs_path@" ] [ "${config.xdg.configHome}/niri/outputs.kdl" ]
         niriConfig;
     "niri/outputs.kdl".source = niriOutputsPath;
   };
+
+  home.activation.ensureNoctaliaThemeTargets = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    niri_theme="${config.xdg.configHome}/niri/noctalia.kdl"
+
+    if [ ! -e "$niri_theme" ]; then
+      $DRY_RUN_CMD install -Dm0644 ${niriNoctaliaFallback} "$niri_theme"
+    fi
+  '';
 
   programs.noctalia = {
     enable = true;
@@ -80,6 +146,17 @@ in
         source = "wallpaper";
         builtin = "Ayu";
         wallpaper_scheme = "m3-content";
+        templates = {
+          enable_builtin_templates = true;
+          builtin_ids = [ ];
+          enable_community_templates = true;
+          community_ids = [ ];
+          user.niri = {
+            input_path = "${repoPath}/configs/noctalia/templates/niri.kdl";
+            output_path = "~/.config/niri/noctalia.kdl";
+            post_hook = "${lib.getExe pkgsUnstable.niri} msg action load-config-file || true";
+          };
+        };
       };
       wallpaper = {
         enabled = true;
@@ -100,6 +177,20 @@ in
         auto_locate = true;
       };
       keybinds = {
+        validate = [
+          "Return"
+          "KP_Enter"
+          "Space"
+        ];
+        cancel = [ "Escape" ];
+        left = [
+          "Left"
+          "Ctrl+H"
+        ];
+        right = [
+          "Right"
+          "Ctrl+L"
+        ];
         down = [
           "Down"
           "Ctrl+J"
@@ -110,6 +201,8 @@ in
           "Ctrl+K"
           "Ctrl+P"
         ];
+        tab_next = [ "Tab" ];
+        tab_previous = [ "Shift+ISO_Left_Tab" ];
       };
       bar.main = {
         position = "top";
@@ -181,10 +274,36 @@ in
       };
       dock = {
         enabled = false;
+        position = "bottom";
+        icon_size = 44;
+        reserve_space = false;
+        show_running = true;
+        show_dots = true;
+        show_instance_count = true;
+        launcher_position = "start";
       };
       plugins = {
         enabled = [ "noctalia/translator" ];
       };
     };
+  };
+
+  systemd.user.services.noctalia-overview-dock-sync = {
+    Unit = {
+      Description = "Show Noctalia dock while Niri overview is open";
+      PartOf = [ config.wayland.systemd.target ];
+      After = [
+        config.wayland.systemd.target
+        "noctalia.service"
+      ];
+    };
+
+    Service = {
+      ExecStart = "${lib.getExe noctaliaOverviewDockSync}";
+      Restart = "on-failure";
+      RestartSec = 2;
+    };
+
+    Install.WantedBy = [ config.wayland.systemd.target ];
   };
 }

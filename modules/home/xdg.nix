@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
   home.sessionVariables = {
@@ -28,17 +28,17 @@
   gtk = {
     enable = true;
     theme = {
-      name = "Adwaita-dark";
-      package = pkgs.gnome-themes-extra;
+      name = lib.mkDefault "Adwaita-dark";
+      package = lib.mkDefault pkgs.gnome-themes-extra;
     };
-    gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
-    gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
+    gtk3.extraConfig.gtk-application-prefer-dark-theme = lib.mkDefault 1;
+    gtk4.extraConfig.gtk-application-prefer-dark-theme = lib.mkDefault 1;
   };
 
   dconf.settings."org/gnome/desktop/interface" = {
-    color-scheme = "prefer-dark";
-    gtk-theme = "Adwaita-dark";
-    cursor-theme = "Adwaita";
-    cursor-size = 24;
+    color-scheme = lib.mkDefault "prefer-dark";
+    gtk-theme = lib.mkDefault "Adwaita-dark";
+    cursor-theme = lib.mkDefault "Adwaita";
+    cursor-size = lib.mkDefault 24;
   };
 }

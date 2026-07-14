@@ -85,6 +85,13 @@
     "enabled": true
   },
   "lsp": {
+    "package-version-server": {
+      "binary": {
+        "ignore_system_version": false,
+        "path": "package-version-server",
+        "arguments": []
+      }
+    },
     "vtsls": {
       "settings": {
         "typescript": {
