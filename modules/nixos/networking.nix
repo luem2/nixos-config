@@ -6,7 +6,11 @@
   '';
 
   networking.networkmanager.plugins = with pkgs; [
+    networkmanager-fortisslvpn
+    networkmanager-l2tp
+    networkmanager-openconnect
     networkmanager-openvpn
+    networkmanager-vpnc
   ];
 
   networking.networkmanager.wifi.powersave = false;
@@ -23,6 +27,7 @@
   environment.systemPackages = with pkgs; [
     cifs-utils
     nmap
+    networkmanagerapplet
     openvpn
     samba
     wireguard-tools
