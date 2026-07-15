@@ -85,6 +85,13 @@
     "enabled": true
   },
   "lsp": {
+    "lua-language-server": {
+      "binary": {
+        "ignore_system_version": false,
+        "path": "lua-language-server",
+        "arguments": []
+      }
+    },
     "package-version-server": {
       "binary": {
         "ignore_system_version": false,

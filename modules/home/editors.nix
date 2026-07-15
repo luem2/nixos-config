@@ -52,6 +52,7 @@ let
 in
 {
   home.packages = [
+    pkgs.lua-language-server
     pkgs.package-version-server
     pkgs.zed-editor
   ];
