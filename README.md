@@ -213,13 +213,17 @@ respuesta rápida al abrir aplicaciones sin castigar autonomía/calor todo el d�
 
 ## Atajos de Niri
 
-Los bindings se versionan en `configs/niri/config.kdl.in`. Flechas y HJKL
-cubren la navegación. En los aliases con flechas, `Shift` mueve ventanas, `Ctrl`
-navega monitores y `Ctrl+Shift` mueve columnas entre monitores. `Win` más la
-rueda cambia de workspace. `Win+W` alterna columnas tabbed y `Win+C` centra la
-columna. `Win+[` y `Win+]` incorporan o expulsan la ventana enfocada de la
-columna vecina, permitiendo apilar ventanas verticalmente. Llevar el puntero a
-una esquina superior abre el overview mediante los hot corners de Niri.
+Los bindings se versionan en `configs/niri/config.kdl.in`. El resumen vivo se
+abre con `Mod+Shift+/`, `just hotkeys` o `nixcfg hotkeys`. La documentación corta
+queda en [Atajos](docs/keybindings.md).
+
+Flechas y HJKL cubren la navegación. En los aliases con flechas, `Shift` mueve
+ventanas, `Ctrl` navega monitores y `Ctrl+Shift` mueve columnas entre monitores.
+`Win` más la rueda cambia de workspace. `Win+W` alterna columnas tabbed y
+`Win+C` centra la columna. `Win+[` y `Win+]` incorporan o expulsan la ventana
+enfocada de la columna vecina, permitiendo apilar ventanas verticalmente. Llevar
+el puntero a una esquina superior abre el overview mediante los hot corners de
+Niri.
 
 ## Post-instalación
 
@@ -246,6 +250,7 @@ mantenimiento de LUKS, TPM2 + PIN y passphrases queda en [LUKS + TPM2](docs/luks
 
 - [Bluetooth troubleshooting](docs/bluetooth.md)
 - [NetworkManager y VPN](docs/network.md)
+- [Atajos](docs/keybindings.md)
 - [Noctalia: cambios en vivo](docs/noctalia.md)
 - [Energía, suspend y wakeup USB](docs/power.md)
 - [Recuperación local](docs/recovery.md)

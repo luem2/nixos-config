@@ -36,6 +36,9 @@ health:
     systemctl --failed --no-pager
     systemctl --user --failed --no-pager
 
+hotkeys:
+    niri msg action show-hotkey-overlay
+
 warnings lines="120":
     journalctl -p warning..alert -b --no-pager -n {{ lines }}
     journalctl --user -p warning..alert -b --no-pager -n {{ lines }}
