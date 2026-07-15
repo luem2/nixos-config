@@ -61,6 +61,7 @@ in
     shellAbbrs = {
       # Editors and helpers
       vim = "nvim";
+      nvi = "nvim-ide";
       zed = "zeditor";
       zj = "zellij";
 

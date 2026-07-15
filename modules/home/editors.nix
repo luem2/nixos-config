@@ -49,9 +49,17 @@ let
       opt = [ ];
     };
   };
+  nvimIde = pkgs.writeShellApplication {
+    name = "nvim-ide";
+    text = ''
+      export NVIM_APPNAME=nvim-ide
+      exec nvim "$@"
+    '';
+  };
 in
 {
   home.packages = [
+    nvimIde
     pkgs.lua-language-server
     pkgs.package-version-server
     pkgs.zed-editor
@@ -61,6 +69,7 @@ in
     "nvim/lua".source = config.lib.file.mkOutOfStoreSymlink "${repoPath}/configs/nvim/lua";
     "nvim/stylua.toml".source =
       config.lib.file.mkOutOfStoreSymlink "${repoPath}/configs/nvim/stylua.toml";
+    "nvim-ide".source = config.lib.file.mkOutOfStoreSymlink "${repoPath}/configs/nvim-ide";
     "Code/User/settings.json" = {
       force = true;
       source = config.lib.file.mkOutOfStoreSymlink "${repoPath}/configs/vscode/settings.json";
@@ -120,12 +129,21 @@ in
       dofile("${repoPath}/configs/nvim/init.lua")
     '';
     extraPackages = with pkgs; [
+      biome
       fd
+      gcc
+      gnumake
+      lazygit
       lua-language-server
       nil
+      nixfmt
+      prettier
       pyright
       ripgrep
+      stylua
+      tree-sitter
       typescript-language-server
+      vscode-langservers-extracted
     ];
   };
 
