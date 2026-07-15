@@ -297,6 +297,7 @@ in
       fetch.prune = true;
       init.defaultBranch = "main";
       pull.rebase = true;
+      rebase.autoStash = true;
       push.autoSetupRemote = true;
       include.path = "~/.gitconfig.local";
     };

@@ -30,8 +30,10 @@
     "vscodevim.vim": 1
   },
   "git.autofetch": true,
+  "git.autoStash": true,
   "git.confirmSync": false,
   "git.openRepositoryInParentFolders": "always",
+  "git.rebaseWhenSync": true,
   "githubPullRequests.createOnPublishBranch": "never",
   "security.workspace.trust.untrustedFiles": "open",
   "telemetry.telemetryLevel": "off",
@@ -167,5 +169,33 @@
   "workbench.activityBar.location": "top",
   "workbench.colorTheme": "One Dark Pro Night Flat",
   "workbench.iconTheme": "material-icon-theme",
-  "workbench.sideBar.location": "right"
+  "workbench.sideBar.location": "right",
+  "mssql.enableRichExperiences": true,
+  "mssql.openQueryResultsInTabByDefault": false,
+  "mssql.openQueryResultsInTabByDefaultDoNotShowPrompt": true,
+  "mssql.connectionGroups": [
+    {
+      "name": "ROOT",
+      "id": "ROOT"
+    }
+  ],
+  "mssql.connections": [
+    {
+      "authenticationType": "SqlLogin",
+      "connectTimeout": 30,
+      "applicationName": "vscode-mssql",
+      "applicationIntent": "ReadWrite",
+      "server": "localhost",
+      "database": "",
+      "user": "sa",
+      "password": "",
+      "commandTimeout": 30,
+      "encrypt": "Mandatory",
+      "groupId": "ROOT",
+      "profileName": "Sql Palmares Local",
+      "trustServerCertificate": true,
+      "savePassword": true,
+      "id": "f04cb2cf-48fb-4c20-9aa6-ca019716ede6"
+    }
+  ]
 }
