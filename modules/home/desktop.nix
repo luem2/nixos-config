@@ -79,6 +79,8 @@ in
     krita
     libreoffice
     localsend
+    loupe
+    mpv
     nerd-fonts.hurmit
     nerd-fonts.jetbrains-mono
     obsidian
