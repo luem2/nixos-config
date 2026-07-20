@@ -1,4 +1,5 @@
 {
+  "icon_theme": "Catppuccin Latte",
   "agent_servers": {
     "codex-acp": {
       "favorite_config_option_values": {
