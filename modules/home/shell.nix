@@ -304,5 +304,22 @@ in
     };
   };
 
-  xdg.configFile."git/ignore".source = ../../configs/git/ignore;
+  xdg.configFile = {
+    "git/ignore".source = ../../configs/git/ignore;
+    "opencode/tui.json" = {
+      force = true;
+      text = builtins.toJSON {
+        "$schema" = "https://opencode.ai/tui.json";
+        keybinds = {
+          app_exit = "ctrl+c,<leader>q";
+          messages_page_up = "pageup,ctrl+alt+b,ctrl+u";
+          messages_page_down = "pagedown,ctrl+alt+f,ctrl+d";
+          messages_half_page_up = "ctrl+alt+u";
+          messages_half_page_down = "ctrl+alt+d";
+          input_delete_to_line_start = "none";
+          input_delete = "delete,shift+delete";
+        };
+      };
+    };
+  };
 }

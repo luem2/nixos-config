@@ -11,44 +11,17 @@
 let
   niriConfig = builtins.readFile ../../configs/niri/config.kdl.in;
   niriOutputsPath = ../../hosts + "/${hostName}/niri-outputs.kdl";
-  noctaliaOverview = pkgs.writeShellApplication {
-    name = "noctalia-overview";
-    runtimeInputs = [
-      pkgsUnstable.niri
-    ];
-    text = ''
-      niri msg action toggle-overview
-    '';
-  };
-  noctaliaOverviewDockSync = pkgs.writeShellApplication {
-    name = "noctalia-overview-dock-sync";
-    runtimeInputs = [
+  bitwardenFieldCopy = pkgs.writeShellApplication {
+    name = "bitwarden-field-copy";
+    runtimeInputs = with pkgs; [
       config.programs.noctalia.package
-      pkgs.jq
-      pkgsUnstable.niri
+      coreutils
+      jq
+      libnotify
+      rbw
+      wl-clipboard
     ];
-    text = ''
-      sync_dock() {
-        if [ "$1" = "true" ]; then
-          noctalia msg dock-show >/dev/null 2>&1 || true
-        else
-          noctalia msg dock-hide >/dev/null 2>&1 || true
-        fi
-      }
-
-      current_overview="$(
-        niri msg --json overview-state 2>/dev/null \
-          | jq -r '.is_open // false' 2>/dev/null \
-          || printf false
-      )"
-      sync_dock "$current_overview"
-
-      niri msg --json event-stream \
-        | jq --unbuffered -r 'select(.OverviewOpenedOrClosed?) | .OverviewOpenedOrClosed.is_open' \
-        | while read -r is_open; do
-            sync_dock "$is_open"
-          done
-    '';
+    text = builtins.readFile ../../configs/scripts/bitwarden-field-copy.sh;
   };
   niriNoctaliaFallback = pkgs.writeText "noctalia-niri-fallback.kdl" ''
     layout {
@@ -68,9 +41,9 @@ in
   home.packages = with pkgs; [
     appflowy
     bitwarden-cli
+    bitwardenFieldCopy
     clock-rs
     ente-auth
-    noctaliaOverview
     gnome-disk-utility
     ghostty
     nautilus
@@ -275,9 +248,11 @@ in
         };
       };
       dock = {
-        enabled = false;
+        enabled = true;
         position = "bottom";
         icon_size = 44;
+        auto_hide = false;
+        smart_auto_hide = true;
         reserve_space = false;
         show_running = true;
         show_dots = true;
@@ -288,24 +263,5 @@ in
         enabled = [ "noctalia/translator" ];
       };
     };
-  };
-
-  systemd.user.services.noctalia-overview-dock-sync = {
-    Unit = {
-      Description = "Show Noctalia dock while Niri overview is open";
-      PartOf = [ config.wayland.systemd.target ];
-      After = [
-        config.wayland.systemd.target
-        "noctalia.service"
-      ];
-    };
-
-    Service = {
-      ExecStart = "${lib.getExe noctaliaOverviewDockSync}";
-      Restart = "on-failure";
-      RestartSec = 2;
-    };
-
-    Install.WantedBy = [ config.wayland.systemd.target ];
   };
 }

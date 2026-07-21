@@ -164,7 +164,7 @@ binds {
     Mod+B hotkey-overlay-title="Chrome" { spawn "google-chrome-stable"; }
     Mod+Alt+B repeat=false hotkey-overlay-title="Bitwarden Password" { spawn "rofi-rbw" "--selector" "wofi" "--clipboarder" "wl-copy" "--typer" "wtype" "--action" "copy" "--target" "password" "--clear-after" "45" "--prompt" "Copy password"; }
     Mod+Alt+U repeat=false hotkey-overlay-title="Bitwarden Username" { spawn "rofi-rbw" "--selector" "wofi" "--clipboarder" "wl-copy" "--typer" "wtype" "--action" "copy" "--target" "username" "--prompt" "Copy username"; }
-    Mod+Alt+Shift+B repeat=false hotkey-overlay-title="Bitwarden Field" { spawn "rofi-rbw" "--selector" "wofi" "--clipboarder" "wl-copy" "--typer" "wtype" "--action" "copy" "--target" "menu" "--clear-after" "45" "--prompt" "Choose entry"; }
+    Mod+Alt+Shift+B repeat=false hotkey-overlay-title="Bitwarden Field" { spawn "bitwarden-field-copy"; }
 
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "noctalia msg volume-up"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn-sh "noctalia msg volume-down"; }
@@ -184,8 +184,8 @@ binds {
     Mod+Alt+Minus allow-when-locked=true hotkey-overlay-title="Brightness Down" { spawn-sh "noctalia msg brightness-down"; }
     Mod+Alt+Equal allow-when-locked=true hotkey-overlay-title="Brightness Up" { spawn-sh "noctalia msg brightness-up"; }
 
-    Mod+O repeat=false hotkey-overlay-title="Overview" { spawn "noctalia-overview"; }
-    Mod+Tab repeat=false hotkey-overlay-title="Overview" { spawn "noctalia-overview"; }
+    Mod+O repeat=false hotkey-overlay-title="Overview" { toggle-overview; }
+    Mod+Tab repeat=false hotkey-overlay-title="Overview" { toggle-overview; }
     Mod+Q repeat=false hotkey-overlay-title="Close Window" { close-window; }
     Mod+H hotkey-overlay-title="Focus Left" { focus-column-left; }
     Mod+J hotkey-overlay-title="Focus Down" { focus-window-down; }
